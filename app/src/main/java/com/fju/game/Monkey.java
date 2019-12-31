@@ -1,11 +1,14 @@
 package com.fju.game;
 
+import android.graphics.Bitmap;
+
 public class Monkey extends Thread {
     public static final int DIRECTION_RIGHT = 0;
     public static final int DIRECTION_LEFT = 1;
     public static final int DIRECTION_UP = 2;
     public static final int DIRECTION_DOWN = 3;
     public static final int DIRECTION_NONE = -1;
+    public static final int DIRECTION_NG = 9;
     private final GameView gameView;
     int x = 0;
     int y = 0;
@@ -17,11 +20,13 @@ public class Monkey extends Thread {
 
     @Override
     public void run() {
-        while(direction != DIRECTION_NONE) {
+        while(direction != DIRECTION_NONE && direction !=DIRECTION_NG) {
             switch (direction) {
                 case DIRECTION_RIGHT:
                     if (x < gameView.getWidth()-200) {
                         x = x + 50;
+                    } else {
+                        direction = DIRECTION_NG;
                     }
                     gameView.invalidate();
                     try {
@@ -33,6 +38,8 @@ public class Monkey extends Thread {
                 case DIRECTION_LEFT:
                     if (x > 50) {
                         x = x - 50;
+                    } else {
+                        direction = DIRECTION_NG;
                     }
                     gameView.invalidate();
                     try {
@@ -44,6 +51,8 @@ public class Monkey extends Thread {
                 case DIRECTION_DOWN:
                     if (y < gameView.getHeight()-200) {
                         y += 50;
+                    } else {
+                        direction = DIRECTION_NG;
                     }
                     gameView.invalidate();
                     try {
@@ -55,6 +64,8 @@ public class Monkey extends Thread {
                 case DIRECTION_UP:
                     if (y > 50) {
                         y -= 50;
+                    } else {
+                        direction = DIRECTION_NG;
                     }
                     gameView.invalidate();
                     try {

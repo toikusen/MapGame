@@ -13,6 +13,9 @@ import androidx.annotation.Nullable;
 
 public class GameView extends View {
     Monkey monkey;
+    private Bitmap bitmapMonkey;
+    private Bitmap bitmapMonkeyNg;
+
     public GameView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
     }
@@ -22,14 +25,17 @@ public class GameView extends View {
         super.onDraw(canvas);
         if (monkey == null) {
             monkey = new Monkey(this);
+            bitmapMonkey = BitmapFactory.decodeResource(getResources(), R.drawable.monkey);
+            bitmapMonkeyNg = BitmapFactory.decodeResource(getResources(), R.drawable.monkey_ng);
         }
         Log.d("Game", "onDraw: " + getWidth() + "," + getHeight());
+        if(monkey.getDirection() == Monkey.DIRECTION_NG){
+            bitmapMonkey = bitmapMonkeyNg;
+        }
         Paint paint = new Paint();
-        Paint paint0 = new Paint();
-        paint0.setColor(0);
 //        canvas.drawLine(400,0, 0,600, paint);
-        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.monkey);
-        canvas.drawBitmap(bitmap, monkey.getX(), monkey.getY(), paint);
+
+        canvas.drawBitmap(bitmapMonkey, monkey.getX(), monkey.getY(), paint);
 //        for (int i=0; i<getHeight()-bitmap.getHeight(); i+=50) {
 //            canvas.drawBitmap(bitmap, 400, 300+i, paint);
 //        }
